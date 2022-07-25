@@ -1,0 +1,264 @@
+add MELPA and Marmalade package repositories. Add the following to ~/.emacs.d/init.el
+```
+(setq package-archives
+'(("gnu" . "http://elpa.gnu.org/packages/")
+("marmalade" . "http://marmalade-repo.org/packages/")
+("melpa" . "http://melpa.milkbox.net/packages/")))
+```
+start emacs server by adding the code below in your profile
+credit to https://stackoverflow.com/questions/19069612/how-to-close-a-emacsclient-gui-frame-without-killing-the-server
+```
+export ALTERNATE_EDITOR=""
+export EDITOR="emacsclient"
+alias e='emacsclient --tty'
+```
+
+modifiers:
+- M --> Alt
+- C --> control
+- S --> shift
+
+
+misc:
+-C-x C-c exit emacs
+- ESC ESC ESC - go back to normal mode
+- C-g best way to get out of trouble, if anything happens
+- M-x customize-option RET sp-override-key-bindings RET - opens window to add keybinding
+
+edits:
+- M-w copy the text
+- C-y paste the text
+- C-M-w append to kill ring
+- M-y cycle through kill ring, select the element you need and paste it. You can also view the content of the kill ring --> C-h v kill-ring
+- C-x C-w write buffer to file
+- C-x C-s save buffer to file
+- C-x s save all files
+- C-_ or C-/ undo
+- M-_ redo
+- C-t transpose character
+- M-t transpose word. This seems to particularly powerful when editing code. As the definition of a word is language specific. so {"a": "b"} after hitting M-t will be turned into {"b": "a"}. Here the transposition only works on the words, not on the symbols, so {1:"a"} with M-t will return {a:"1"}. While if you want to transpose the actual expression, including the symbols you should use C-M-t, which should lead to {"a":1}, but it doesn't...
+- C-M-t transpose s-expressions
+- C-x C-t transpose current line with the previous one
+- C-x C-; comment/uncomment current line or the highlighted ones
+- M-; add comment at the end of line
+- C-d delete character or delete highlighted
+- M-d delete word
+- C-w delete highlighted text or whole line if nothing is highlighted (I think that this is a prelude perk)
+- C-k delete from point to end of line, doesn't delete newline character. Hit it twice to delete also the newline
+- C-S-<backspace> delete line and newline
+- C-d, <backspace>, M-d, M-<backspace> respectively kill character, or word, below pointer or before
+- M-z word. kill from point to the word typed
+- C-M-k kill s-expressioin
+- C-x and C-x or C-l to uppercase or lowercase a region. Also, there is a function called upcase-initials-region to capitalize
+- M-c, M-u, M-l operate on next words and respectively, capitalize, uppercase and lowercase them
+- C-o insert blank line after point
+- C-m insert black line where the point is and moves to its start
+- C-x C-o delete all blank lines after point. Ignores one empty line and leaves it as it is. So, it will always leave an empty one, as long as the point is on there
+- C-M-o split line after point keeping the indentation
+- M-^ Joins the line the point is one with the one above. This is particularly useful when there are arguments ranging multiple lines that should be merged on a single one.
+
+manage frames:
+- C-x 5 C-h list all keybindings available to manipulate frames
+
+manage buffers:
+- C-x b open buffer to switch
+- C-x k open buffer to kill
+- C-x C-f open file in buffer
+- C-x 1 kill window 1
+- C-x 3 split window in 2 (vertically)
+- C-x 2 split window in 2 (horizontally)
+- C-x C-left arrow move to previous buffer
+- C-x C-right arrow move to next buffer
+- C-s word - search for "word" forward, hit C-s to move to the next word. Hit return to stop at the selected word. Hit C-g to go back at start. Also, you can continue searching in reverse direction by hitting C-r and viceversa. Also when you hit return you will be left at the matched term, but also a marker will be set at your original position, so you can simply go back by hitting C-u C-SPC
+- C-r word - search for "word" backward
+- C-s w toggles word mode. Now searching multiple words will match all cases where these two words have something else in between. This should be activated before the search
+- C-M-s and C-M-r begins a regex forward or backward search
+- C-s C-s allows to search the previous search term again
+- M-n and M-p allow you to move to the next and previous item in the search ring
+- C-M-i tab complete search string against previous search stringsw
+- C-u -4 C-x Tab negative indent by 4
+- C-u 4 C-x Tab positive indent by 4
+
+navigate buffer:
+- C-f move forward
+- M-f move one word forward
+- C-b move backward
+- M-b move one word backward
+- C-n move next line
+- C-p move previous line
+- C-a move beginning of line
+- C-e move end of line
+- M-m move to first character of line
+- M-g M-g number --> go to line with number
+- M-} and M-} Move to end or start of paragraph
+- C-M-a and C-M-e move at start or end of the function definitions
+- C-M-f and C-M-b allows to move forward and backward within s-expression. ie balanced expressions, such as "", [], {} etc.
+- C-M-u and C-M-d allows you to move deeper or higher in balanced s-expressions. Not just move but also delete, so C-M-k would delete the next balanced expression. An example of this: [foo(bar)] with C-M-u you can jump. In Ubuntu I had to modify a default keymap through dconf-editor as per https://askubuntu.com/questions/175369/how-do-i-disable-ctrl-alt-d-in-gnome-shell
+[O- C-M-n and C-M-p move to the next or previous element in a list of balanced s-expression. eg move from one to dictionary to the next
+- C-M-f and C-M-b move to the start and end of balanced s-expression
+- C-v and M-v scroll down and up one page. Emacs will scroll by nearly full screens, where a full screen is the number of lines visible in that window. You can also scroll direcly another window
+- C-number-<direction> move number of characters in direction
+- M-< move to beginning of file
+- M-> move to end of file
+- C-SPC mark (highlight)
+- C-a C-SPC c-e highlight all sentence. followed by C-d deletes, followed by M-w copy
+- C-u C-SPC can be used to go where your marker was before the change
+- C-x C-x it reactivates the region from the point (where the cursor is) and the last position where the mark was set, and then swap them.
+- M-h mark the next paragraph
+- C-x mark the whole buffer
+- C-M-h mark the next defun (function)
+- C-x C-p mark the whole page
+- M-@ mark the next word. All mark commands append to the existing region, so M-2 M-@ will highlight the next two words
+- C-M-SPC and C-M-@ mark the next s-expression. This can be also reverted doing C-M-- C-M-SPC to highlight the expression before the marker
+- C-SPC or C-g deactivates the region
+- M-x imenu allows to list all dfunc in the current buffer
+
+
+find info:
+- M-x list existing commands type to search and execute the one selected
+- append C-h to any partial (prefix) key you don't remember to get suggestions. C-x 8 C-h will give you all results starting with C-x 8
+- C-h open help search
+- C-h i open info manual
+- C-h a word (same as M-x apropos-command) - apropos on "word" lists all commands that work on words (eg C-h a ^helm-)
+- M-x apropos-variable word - list all existing variable names containing word
+- C-h m - display description for major/minor mode. helm-descbindings list all the active keymap bindings
+- C-h f - describe  function, you can also describe modes this way
+- C-h v - describe a variable
+- C-h k - check whether a keybind is linked to a command in the active buffer and describes it
+- C-h w command-name gives the keymap binded to the command
+- M-x info-apropos word will crawl all known manuals for the word
+- the universal argument can be used as M-5 or as C-u 5. Also by default C-u is going to mean 4 and C-u C-u 16 4*4)
+- C-u 10 C-u 5 will insert 5 10 times
+- C-u 5 down arrow moves down by 5 lines. up arrow the opposite
+- C-a C-SPC C-u 4 down-arrow C-e highlight 5 rows
+- C-h v variable_name describe the variable, useful for checking the definition of things like paragraph-start
+- C-M-g go to python definition (this is a custom keymap)
+- C-x s ! save all modified buffers
+
+
+- M-! --> run shell command
+- c-g exit current command definition
+
+extras:
+- It is possible to treat each component of CamelCase or of camel_case as an individual word or the whole thing as single word by activating the subword-mode or the superwod-mode.
+- the mark is the starting point set with C-SPC, while the point is where you are currenlty highlighting.
+- a region is contiguous block between the point and the marker
+- marking commands will append to the existing region, so combining multiple commands together will create a single broader highlighted area.
+- There are several rings, the ones encountered so far: undo ring, mark ring, search ring
+- M-x eval-buffer to reload the emacs config
+
+USEFUL COMMANDS:
+
+Flyspell
+- C-M-i Fixes automatically word spelling errors
+
+Flycheck
+- C-c ! l list all errors in new window
+- raise issues with flycheck-list-errors or lsp-ui-flycheck-list
+
+Registers
+- I should further improve this by defining flexible registers and use org mode. As suggested in this video https://www.youtube.com/watch?v=RLPU65RLiC4&t=7s
+- C-x r j <key> jump-to-register saved under letter <key>
+-
+
+Highlight text
+- M-s h p highlight word
+- M-s h r highlight regexp
+- M-s h . highlight symbol
+- M-s h u remove highlight
+
+
+Yasnippet
+- There a bunch of predefined snippets that could be used for boilerplate code. To use them it's enough to write the relevant key and hit tab right after. As an example typing "from" and hitting tab right after will insert "from lib insert func". Most snippets I am using are coming from yasnippet-snippets and their definition, for python can be found here https://github.com/AndreaCrotti/yasnippet-snippets/tree/master/snippets/python-mode
+
+Autocompletition
+- M-/ Hippie expand will show various suggestions to complete the word on the left of the pointer. Repeatedly hitting M-/ will cycle through the various options available.
+- It may be worth reading the docs at a certain point and see what other config options are available.
+
+Macros:
+- F3 start registering macro
+- F4 stop registering macro
+- C-x e run last macro registered
+- macros are saved in a macro ring, also they can be saved on disk
+- C-u 5 C-x e run the last macro 5 times. The same logic would work using different numerics
+- C-u 0 C-x e run the last macro until the end of file is reached.
+- There is much more stuff about macros, at a certain point it may be worth reading about it
+
+Occur
+- M-s o start occur mode, allows you to search word using regex. It will open a new buffer with the search results. M-n, M-p will allow to move to the next and previous search result
+- < or > allows to go to the beginning or end of the search buffer
+- g refreshes buffer results. run again search and update results
+- e switches to edit mode
+- C-c C-c saves and exits from edit mode
+- q quits occur
+- M-g M-n or M-g M-p allows you to move to the next or previous occur search result directly in the main buffer including the searched values. In general it seems like that this combination of keys will work with other commands resulting in matches in the main buffer
+- M-x multi-occur-in-matching-buffers will run occur on multiple buffers, can I do it with all files with a certain extension? ie replicate general search in project
+
+Helm
+- C-x c seems to be the key to introduce Helm function calls. So, C-x c C-x C-b will open the list of buffers
+- in Prelude helm default prefix is C-c h
+- C-c h C-h gives a list of keybindings for Helm
+- M-x helm-occur allows to use helm with occur
+- when Helm is enable for buffer search C-x b will open the active buffers, it is then possible to select the ones of interest with C-SPC and then hit TAB to select the preferred action. One of them is kill-buffer, which will make it possible to kill multiple buffers in one go
+- to delete multiple buffers run command helm-buffers-list, select all buffers with M-m, then deselect the ones you want to keep with C-SPC. Hit TAB to select the action to do (kill)
+- C-o will move the cursor from the "Commands history" box to the "Commands" one
+
+Markdown
+- C-c C-c p gives a preview of markdown files
+- C-c C-c m will compile the markdown to html and show the output in another buffer
+
+Current EDI functionalities
+- M-. go to definition
+- M-, go back to previous marker after having been at the definition
+- M-? go to usages. This requires having a tags table available. Which I don't have at the moment
+- C-c C-s find references to symbol in project. coming from Elpy
+- various other options available at https://elpy.readthedocs.io/en/latest/ide.html
+
+Treemacs
+- F8 to open/close the treemacs tree
+- ? from within the tree offers some keybindings.
+- I didn't map most keybindings yet. I should read the docs https://github.com/Alexander-Miller/treemacs#quick-start
+
+LSP (more details on available features https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/)
+- C-c C-l prefix for lsp commands
+- C-c C-l g g go to object definition
+- When typing a function you can leave the pointer to its parenthesis and you will be shown its signature. If the function has been overloaded and can take multiple parameters you can move across the different signatures by typing M-n and M-p
+- C-c C-l r r refactor rename variables under cursor
+
+Company
+- M-n and M-p moves across suggestions
+- C-h open window with suggested object docstring
+- C-w open window with object definition
+
+Python
+- I need to reactivate the virtual envy in the buffer by running "pyvenv workon"
+- M-? go to object usages
+- C-c C-p run python repl starting from python-mode
+- C-c C-c run buffer in python repl
+- C-c C-r run region in python repl
+- projectile-test-project allows to easily run the test suite for the project. Also, you can run the "recompile" command (g keymap) to re-run the test command without having to specify it
+
+Projectile
+- C-c p prefix for projectile-mode
+- C-c p f find file in project. You have to have open a file from the same project
+- C-c p b open project buffer
+- C-c p t open test file
+- C-c p T open matched test files
+- C-c p r replace in project
+- C-c p s g grep within project
+- C-c p ! run shell command within project
+- C-c p x s run shell within project
+- to get better with projectile https://stackoverflow.com/questions/35805591/how-to-use-projectile-find-test-file
+
+TODO:
+- read about how negative commands can be used as modifiers. eg use C-M-- (inverse of C-M-v) rather than C-M-S-v.
+- may be interesting to better understand how bookmarks and registers work
+- read more about Helm, there should be a lot there.
+- read about IDO (Interactively DO Things) once I get more familiar with Helm and Emacs. https://www.masteringemacs.org/article/introduction-to-ido-mode
+- read more about grepping, book page 156. Learning more about grepping will be particularly useful when I will need to jump to definitions or look for something in a project.
+- It is possible to specify the paragraphs width
+- read more about search and replace, pag 186 of book
+- read more about TRAMP to access remote files
+- read more about how to operate with directories (aka dired).
+- read more about digit arguments and negative ones. They don't seem to work. s-expressions to delete like C-M-2 C-M-k are supposed to delete 2 elements but they don't https://www.gnu.org/software/emacs/manual/html_node/emacs/Arguments.html
+- read more about org mode to take notes
