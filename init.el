@@ -97,6 +97,12 @@
   :ensure t
   :bind (("C-;" . goto-last-change)))
 
+(use-package direnv
+  :ensure t
+  :config
+  (direnv-mode))
+
+
 ;; Python specific configs
 ;; annoyingly given that python-mode is being reffered to in other snippets
 ;; we need to define it earlier on here. I am sure there is a way to avoid
@@ -112,6 +118,7 @@
   )
 
 (use-package python-black
+  :ensure t
   :demand t
   :after python
   :hook (python-mode . python-black-on-save-mode-enable-dwim)
