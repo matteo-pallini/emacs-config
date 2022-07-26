@@ -33,9 +33,12 @@
 
 (package-initialize)
 
-; fetch the list of packages available
-(unless package-archive-contents
-  (package-refresh-contents))
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(require 'use-package)
+(setq use-package-always-ensure t)
 
 ; install the missing packages
 (dolist (package package-list)
@@ -94,11 +97,9 @@
 (load-theme 'zenburn t)
 
 (use-package goto-last-change
-  :ensure t
   :bind (("C-;" . goto-last-change)))
 
 (use-package direnv
-  :ensure t
   :config
   (direnv-mode))
 
@@ -118,7 +119,6 @@
   )
 
 (use-package python-black
-  :ensure t
   :demand t
   :after python
   :hook (python-mode . python-black-on-save-mode-enable-dwim)
@@ -129,7 +129,6 @@
  )
 
 (use-package pyvenv
-  :ensure t
   :init
   (setenv "WORKON_HOME" "~/.virtualenvs/")
   :config
@@ -137,7 +136,6 @@
 
 
 (use-package smartparens
-  :ensure t
   :diminish smartparens-mode
   :config
   (progn
@@ -146,14 +144,12 @@
     (show-paren-mode t)))
 
 (use-package which-key
-  :ensure t
   :diminish which-key-mode
   :config
   (which-key-mode +1))
 
 
 (use-package flycheck
-  :ensure t
   :diminish flycheck-mode
   :after lsp-mode
   :config
@@ -167,7 +163,6 @@
             #'custom_chain:lsp-next-checker))
 
 (use-package projectile
-  :ensure t
   :diminish projectile-mode
   :hook
   (after-init . projectile-mode)
@@ -179,7 +174,6 @@
 
 
 (use-package helm
-  :ensure t
   :defer 2
   :bind
   ("M-x" . helm-M-x)
@@ -198,7 +192,6 @@
 
 ; remember to install the specific LSP server for the language of interest
 (use-package lsp-mode
-  :ensure t
   :commands (lsp lsp-deferred)
   :init
   (setq lsp-keymap-prefix "C-c C-l")
@@ -212,7 +205,6 @@
   )
 
 (use-package lsp-ui
-  :ensure t
   :hook (lsp-mode . lsp-ui-mode)
   :after lsp-mode
   :custom
@@ -228,12 +220,10 @@
   )
 
 (use-package lsp-treemacs
-  :ensure t
   :after (lsp-mode)
   )
 
 (use-package company
-  :ensure t
   :after lsp-mode
   :hook (lsp-mode . company-mode)
   :bind (:map company-active-map
@@ -245,7 +235,6 @@
   (company-idle-delay 0.0))
 
 (use-package lsp-pyright
-  :ensure t
   :hook
   (python-mode . (lambda ()
                   (require 'lsp-pyright)
@@ -256,11 +245,9 @@
 
 ; search for a specific symbol in the all project
 (use-package lsp-ivy
-  :ensure t
   )
 
 (use-package markdown-mode
-             :ensure t
              :mode ("README\\.md\\'" . gfm-mode)
              :init (setq markdown-command "multimarkdown"))
 
