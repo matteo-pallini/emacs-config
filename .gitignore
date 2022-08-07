@@ -1,0 +1,7 @@
+# ignore everything except the emacs config files
+*
+
+!.gitignore
+!init.el
+!custom.el
+!personal_cheatsheet.txt
