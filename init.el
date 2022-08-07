@@ -64,6 +64,7 @@
 (column-number-mode t)
 (setq inhibit-startup-screen t)
 
+
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
        (abbreviate-file-name (buffer-file-name))
@@ -103,6 +104,9 @@
   :config
   (direnv-mode))
 
+; add line on 80th column
+(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+
 
 ;; Python specific configs
 ;; annoyingly given that python-mode is being reffered to in other snippets
@@ -133,6 +137,13 @@
   (setenv "WORKON_HOME" "~/.virtualenvs/")
   :config
   (pyvenv-mode 1))
+
+
+(use-package dockerfile-mode
+  :mode "Dockerfile\\'")
+
+(use-package docker-compose-mode
+  :mode "docker-compose\\'")
 
 
 (use-package smartparens
@@ -301,16 +312,15 @@
 (global-set-key (kbd "C-S-<backspace>") 'kill-whole-line)
 (global-set-key [remap dabbrev-expand] 'hippie-expand)
 (global-set-key (kbd "C-!") 'treemacs)
-(global-set-key (kbd "C-+") 'select-window)
+(global-set-key (kbd "C-@") 'treemacs-select-window)
 (global-set-key (kbd "C-c l") #'org-store-link)
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c c") #'org-capture)
 ;(global-set-key (kbd "C-M-g") 'elpy-goto-definition)
 
 
-(use-package ein
-  :bind (:map ein:execute
-	      ("C-c C-c" . ein:worksheet-execute-cell-and-got-next)))
+; mac specific meta remapping
+(setq mac-command-modifier 'meta) ; set alt-key to meta
 
 ; credit https://github.com/flycheck/flycheck/issues/1762#issuecomment-750458442
 (defvar-local my/flycheck-local-cache nil)
@@ -328,6 +338,16 @@
 
 ; projectile keybinding
 (projectile-mode +1)
+
+
+; ensure that emacs has the same environment variables of the user's shell
+(use-package exec-path-from-shell)
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+
+;; (use-package ein
+;;   :bind (:map ein:execute
+;; 	      ("C-c C-c" . ein:worksheet-execute-cell-and-got-next)))(projectile-mode +1)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 
