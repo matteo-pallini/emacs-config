@@ -3,6 +3,9 @@
 ; as per https://stackoverflow.com/questions/16605571/why-cant-i-change-paredit-keybindings
 ; disable it by commenting out line 81 in core/prelude-edior.el
 
+; configurations worth reading in more detail:
+; - https://github.com/ianyepan/.wsl-emacs.d/blob/master/init.el
+
 ; set custom.el as customizations file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
@@ -100,6 +103,12 @@
 (use-package goto-last-change
   :bind (("C-;" . goto-last-change)))
 
+(use-package uniquify
+  :ensure nil
+  :config
+  (setq-default uniquify-buffer-name-style 'forward))
+
+
 (use-package direnv
   :config
   (direnv-mode))
@@ -139,9 +148,6 @@
   (pyvenv-mode 1))
 
 
-(use-package dockerfile-mode
-  :mode "Dockerfile\\'")
-
 (use-package docker-compose-mode
   :mode "docker-compose\\'")
 
@@ -179,6 +185,8 @@
   (after-init . projectile-mode)
   :init
   (setq projectile-project-search-path '("~/Projects"))
+  :config
+  (setq projectile-sort-order 'recentf)
   :bind-keymap
   ("C-c p" . projectile-command-map)
  )
@@ -213,6 +221,7 @@
   (lsp-enable-symbol-highlighting t)
   :config
   (lsp-enable-which-key-integration t)
+  (add-hook 'a-mode-hook #'(lambda () (when (eq major-mode 'java-mode) (lsp-deferred))))
   )
 
 (use-package lsp-ui
@@ -254,9 +263,27 @@
   (setq lsp-pyright-typechecking-mode "basic")
   )
 
+(setq lsp-java-java-path (substitute-in-file-name "${JAVA_HOME}/bin/java"))
+(setq lsp-java-format-on-type-enabled nil)
+(setq lsp-enable-on-type-formatting nil)
+
+
+(use-package lsp-java
+  :after lsp
+  :defer t
+  )
+
+(use-package java
+  :ensure nil
+  :after lsp-java
+  :bind (:map java-mode-map ("C-c i" . lsp-java-add-import)))
+
+
+
 ; search for a specific symbol in the all project
 (use-package lsp-ivy
   )
+
 
 (use-package markdown-mode
              :mode ("README\\.md\\'" . gfm-mode)
@@ -345,9 +372,7 @@
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
-;; (use-package ein
-;;   :bind (:map ein:execute
-;; 	      ("C-c C-c" . ein:worksheet-execute-cell-and-got-next)))(projectile-mode +1)
+
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 
