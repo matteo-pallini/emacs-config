@@ -83,6 +83,9 @@
 ; store all backup files in specific directory
 (setq backup-directory-alist `(("." . "~/.emacs_backups")))
 
+
+(setq auto-save-file-name-transforms `((".*" , "~/.emacs_backups" t)))
+
 ; show file path in title
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
@@ -115,6 +118,8 @@
 
 ; add line on 80th column
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+
+(use-package go-mode)
 
 
 ;; Python specific configs
@@ -185,6 +190,8 @@
   (after-init . projectile-mode)
   :init
   (setq projectile-project-search-path '("~/Projects"))
+  (setq projectile-globally-ignored-files '("*.json"))
+  (setq projectile-globally-ignored-directories '(".mypy" ".pytest_cache"))
   :config
   (setq projectile-sort-order 'recentf)
   :bind-keymap
@@ -335,6 +342,7 @@
 
 ; custom keybindings
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
+(global-set-key (kbd "C-x o") 'ace-window)
 (global-set-key (kbd "M-i") 'imenu)
 (global-set-key (kbd "C-S-<backspace>") 'kill-whole-line)
 (global-set-key [remap dabbrev-expand] 'hippie-expand)
@@ -362,6 +370,7 @@
           (lambda ()
             (when (derived-mode-p 'python-mode)
               (setq my/flycheck-local-cache '((lsp . ((next-checkers . (python-flake8)))))))))
+
 
 ; projectile keybinding
 (projectile-mode +1)
