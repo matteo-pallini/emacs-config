@@ -5,8 +5,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(helm-completion-style 'helm)
+ '(ispell-dictionary nil)
  '(package-selected-packages
-   '(go-mode lsp-java projectile docker-compose-mode dockerfile-mode python-black direnv elpy blacken company async "use-package" goto-last-change python-mode lsp-ivy lsp-treemacs flycheck exec-path-from-shell lsp-ui lsp-pyright helm which-key smartparens pyvenv terraform-mode zenburn-theme treemacs-projectile magit py-autopep8 yasnippet-snippets yasnippet use-package))
+   '(rustic go-mode lsp-java projectile docker-compose-mode dockerfile-mode python-black direnv elpy blacken company async "use-package" goto-last-change python-mode lsp-ivy lsp-treemacs flycheck exec-path-from-shell lsp-ui lsp-pyright helm which-key smartparens pyvenv terraform-mode zenburn-theme treemacs-projectile magit py-autopep8 yasnippet-snippets yasnippet use-package))
  '(pyvenv-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
