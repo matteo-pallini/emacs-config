@@ -131,7 +131,7 @@
   (:map python-mode-map
    ("C-c C-p" . run-python)
    ("C-c C-r" . python-shell-send-region)
-   ("C-c C-c" . python-shell-send-file))
+   ("C-c C-s" . python-shell-send-file))
   :custom
   (python-shell-interpreter "python3")
   )
