@@ -121,6 +121,7 @@
 
 (use-package go-mode)
 
+(use-package csv-mode)
 
 ;; Python specific configs
 ;; annoyingly given that python-mode is being reffered to in other snippets
@@ -323,7 +324,7 @@
 (defun rk/rustic-mode-hook ()
   ;; so that run C-c C-c C-r works without having to confirm, but don't try to
   ;; save rust buffers that are not file visiting. Once
-  ;; https://github.com/brotzeit/rustic/issues/253 has been resolved this should
+  ;; https://github.com/brotzeit/ustic/issues/253 has been resolved this should
   ;; no longer be necessary.
   (when buffer-file-name
     (setq-local buffer-save-without-query t)))
