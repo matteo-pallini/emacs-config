@@ -334,9 +334,19 @@
   )
 
 
-(use-package markdown-mode
-             :mode ("README\\.md\\'" . gfm-mode)
-             :init (setq markdown-command "multimarkdown"))
+; used to render markdown in impatient mode.
+(defun markdown-html (buffer)
+  (princ (with-current-buffer buffer
+	   (format "<!DOCTYPE html><html><title>Impatient Markdown</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://ndossougbe.github.io/strapdown/dist/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
+	 (current-buffer)))
+
+; The rendered markdown is available at localhost:8080/imp/
+(use-package impatient-mode
+             :mode "\\.md\\'"
+             :config
+	     (httpd-start)
+	     )
+(add-hook 'impatient-mode-hook (lambda () (imp-set-user-filter #'markdown-html)))
 
 (use-package yasnippet
   :custom
