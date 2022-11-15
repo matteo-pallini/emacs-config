@@ -149,7 +149,7 @@
 
 (use-package pyvenv
   :init
-  (setenv "WORKON_HOME" "~/.virtualenvs/")
+  (setenv "WORKON_HOME" (substitute-in-file-name "${WORKON_HOME}"))
   :config
   (pyvenv-mode 1))
 
@@ -320,6 +320,9 @@
   ;; comment to disable rustfmt on save
   (setq rustic-format-on-save t)
   (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook))
+
+;; I don't set this default rustfmt will look for ruftml.toml every time I save
+(setq rustic-rustfmt-args "--edition=2021")
 
 (defun rk/rustic-mode-hook ()
   ;; so that run C-c C-c C-r works without having to confirm, but don't try to
