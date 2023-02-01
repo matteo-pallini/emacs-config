@@ -154,6 +154,14 @@
   (pyvenv-mode 1))
 
 
+(use-package python-pytest
+  :bind
+    (:map python-mode-map
+   ("C-c C-t" . python-pytest-file)
+   ("C-c C-a" . python-pytest))
+  )
+
+
 (use-package docker-compose-mode
   :mode "docker-compose\\'")
 
