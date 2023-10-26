@@ -1,3 +1,4 @@
+;;;
 ; Other custom changes:
 ; - I disable paredit default bindings because they were conflicting with xref-find-references
 ; as per https://stackoverflow.com/questions/16605571/why-cant-i-change-paredit-keybindings
@@ -111,7 +112,6 @@
   :config
   (setq-default uniquify-buffer-name-style 'forward))
 
-
 (use-package direnv
   :config
   (direnv-mode))
@@ -132,9 +132,9 @@
   (:map python-mode-map
    ("C-c C-p" . run-python)
    ("C-c C-r" . python-shell-send-region)
-   ("C-c C-s" . python-shell-send-file))
+   ("C-c C-b" . python-shell-send-buffer))
   :custom
-  (python-shell-interpreter "python3")
+  (python-shell-interpreter "ipython")
   )
 
 (use-package python-black
@@ -442,6 +442,11 @@
           (lambda ()
             (when (derived-mode-p 'python-mode)
               (setq my/flycheck-local-cache '((lsp . ((next-checkers . (python-flake8)))))))))
+
+
+; lisp
+(use-package slime)
+(setq inferior-lisp-program "sbcl")
 
 
 ; projectile keybinding
