@@ -1,4 +1,3 @@
-;;;
 ; Other custom changes:
 ; - I disable paredit default bindings because they were conflicting with xref-find-references
 ; as per https://stackoverflow.com/questions/16605571/why-cant-i-change-paredit-keybindings
@@ -447,6 +446,13 @@
 ; lisp
 (use-package slime)
 (setq inferior-lisp-program "sbcl")
+(use-package slime-mode
+  :bind
+  (:map slime-mode-map
+   ("C-c C-k" . slime-compile-and-load-file)
+;; (add-hook 'slime-mode-hook
+;;           (lambda () (local-set-key (kbd "C-c C-k") #')))
+   ))
 
 
 ; projectile keybinding
