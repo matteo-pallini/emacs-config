@@ -199,7 +199,7 @@
   :init
   (setq projectile-project-search-path '("~/Projects"))
   (setq projectile-globally-ignored-files '("*.json" "*.parquet" "*.ipynb"))
-  (setq projectile-globally-ignored-directories '(".mypy" ".pytest_cache" "fixtures" "__pycache__" "data"))
+  (setq projectile-globally-ignored-directories '(".mypy" ".mypy_cache" ".pytest_cache" "fixtures" "__pycache__" "data" ".pytype" ".git"))
   :config
   (setq projectile-sort-order 'recentf)
   :bind-keymap
